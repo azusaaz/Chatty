@@ -50,8 +50,9 @@ class MessageList extends Component {
   render() {
 
     let messages = this.state.messages.map((message)=>{
+        // alert(message);
         return <Message message = {message}/>
-    })
+    });
 
     return (
       <main className="messages">
