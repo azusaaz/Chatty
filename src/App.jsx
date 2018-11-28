@@ -27,23 +27,30 @@ class App extends Component {
        messages: messageData.messages
 
       };
-      this.handleOnKeyPress = this.handleOnKeyPress.bind(this);
+      this.addMessage = this.addMessage.bind(this);
+      this.socket = new WebSocket("ws://localhost:3001/");
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+
+    
+    // console.log(this.socket);
+    console.log('Client connected');
+   
+    // console.log("componentDidMount <App />");
+    // setTimeout(() => {
+    //   console.log("Simulating incoming message");
+    //   // Add a new message to the list of messages in the data store
+    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
+    //   const messages = this.state.messages.concat(newMessage)
+    //   // Update the state of the app component.
+    //   // Calling setState will trigger a call to render() in App and all child components.
+    //   this.setState({messages: messages})
+    // }, 3000);
+
   }
 
-  handleOnKeyPress(e){
+  addMessage(e){
 
     var keycode = (e.keyCode ? e.keyCode : e.which);
   
@@ -55,9 +62,13 @@ class App extends Component {
           content: e.target.value
         };
 
-        const messages = this.state.messages.concat(newMessages);
+        // const messages = this.state.messages.concat(newMessages);
 
-        this.setState({messages: messages});
+        // this.setState({messages: messages});
+
+        this.socket.send(JSON.stringify(newMessages));
+
+        e.target.value = '';
     
     }
    
@@ -70,7 +81,7 @@ class App extends Component {
          <a href="/" className="navbar-brand">Chatty</a>
        </nav>
       <MessageList messages= {this.state.messages} />
-      <ChatBar onKeyPress={this.handleOnKeyPress} currentUserName = {this.state.currentUserName}/>
+      <ChatBar onKeyPress={this.addMessage} currentUserName = {this.state.currentUserName}/>
       </div>
     );
   }
