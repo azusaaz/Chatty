@@ -23,7 +23,7 @@ class App extends Component {
   constructor(){
      super();
      this.state = {
-       currentUserName: messageData.currentUser.name,
+       currentUser: {name: "Bob"},
        messages: messageData.messages
 
       };
@@ -58,7 +58,7 @@ class App extends Component {
    
         const newMessages =  {
           // id: this.state.messages.length, 
-          username: this.state.currentUserName, 
+          username: this.state.currentUser, 
           content: e.target.value
         };
 
@@ -81,7 +81,7 @@ class App extends Component {
          <a href="/" className="navbar-brand">Chatty</a>
        </nav>
       <MessageList messages= {this.state.messages} />
-      <ChatBar onKeyPress={this.addMessage} currentUserName = {this.state.currentUserName}/>
+      <ChatBar onKeyPress={this.addMessage} currentUser = {this.state.currentUser}/>
       </div>
     );
   }
