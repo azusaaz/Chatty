@@ -24,7 +24,7 @@ class App extends Component {
      super();
      this.state = {
        currentUser: {name: "Bob"},
-       messages: messageData.messages
+       messages: []
 
       };
       this.addMessage = this.addMessage.bind(this);
@@ -36,6 +36,21 @@ class App extends Component {
     
     // console.log(this.socket);
     console.log('Client connected');
+    
+    this.socket.onmessage = (event) => {
+
+      let data = JSON.parse(event.data);
+
+      const newMessages =  {
+        username: data.username, 
+        content: data.content
+      };
+
+      const messages = this.state.messages.concat(newMessages);
+
+      this.setState({messages: messages});
+ 
+    }
    
     // console.log("componentDidMount <App />");
     // setTimeout(() => {
@@ -56,9 +71,14 @@ class App extends Component {
   
     if(keycode === 13){
    
+        // const newMessages =  {
+        //   // id: this.state.messages.length, 
+        //   username: this.state.currentUser, 
+        //   content: e.target.value
+        // };
+        
         const newMessages =  {
-          // id: this.state.messages.length, 
-          username: this.state.currentUser, 
+          username: this.state.currentUser.name, 
           content: e.target.value
         };
 
