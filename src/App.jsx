@@ -24,7 +24,8 @@ class App extends Component {
      super();
      this.state = {
        "currentUser": {name: "Bob"},
-       "messages": []
+       "messages": [],
+       "numOfClient": 1
 
       };
       this.addMessage = this.addMessage.bind(this);
@@ -41,28 +42,37 @@ class App extends Component {
     this.socket.onmessage = (event) => {
 
       let data = JSON.parse(event.data);
+      console.log("data",event.data)
 
-      const newMessages =  {
-        "username": data.username, 
-        "content": data.content
-      };
+      if(data.numOfClient){
+        console.log("numOfClient",data.numOfClient)
+        this.setState({numOfClient: data.numOfClient});
 
-      switch(data.type) {
-        case "incomingMessage":
-          newMessages.type = "incomingMessage"
-          break;
+      }else{
 
-        case "incomingNotification":
-          newMessages.type = "incomingNotification"
-          break;
+        const newMessages =  {
+          "username": data.username, 
+          "content": data.content
+        };
+  
+        switch(data.type) {
+          case "incomingMessage":
+            newMessages.type = "incomingMessage"
+            break;
+  
+          case "incomingNotification":
+            newMessages.type = "incomingNotification"
+            break;
+  
+          default:
+            throw new Error("Unknown event type " + data.type);
+        }
+  
+        const messages = this.state.messages.concat(newMessages);
+  
+        this.setState({messages: messages});
 
-        default:
-          throw new Error("Unknown event type " + data.type);
       }
-
-      const messages = this.state.messages.concat(newMessages);
-
-      this.setState({messages: messages});
  
     }
    
@@ -135,6 +145,7 @@ class App extends Component {
       <div>
        <nav className="navbar">
          <a href="/" className="navbar-brand">Chatty</a>
+         <p>{this.state.numOfClient} users online</p>
        </nav>
       <MessageList messages= {this.state.messages} />
       <ChatBar addMessage={this.addMessage} changeName={this.changeName} currentUser = {this.state.currentUser}/>
