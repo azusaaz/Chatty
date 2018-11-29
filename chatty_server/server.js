@@ -36,6 +36,17 @@ wss.on('connection', (ws) => {
 
     var data = JSON.parse(data);
     data.id = uuidv1();
+    console.log(data.type);
+    switch(data.type) {
+      case "postMessage":
+        data.type = "incomingMessage";
+        break;
+      case "postNotification":
+        data.type = "incomingNotification";
+        break;
+      default:
+        throw new Error("Unknown event type " + data.type);
+    }
  
     // Broadcast to everyone else.
     wss.clients.forEach(function each(client) {

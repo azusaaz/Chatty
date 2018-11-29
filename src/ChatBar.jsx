@@ -9,7 +9,7 @@ class ChatBar extends Component{
 
      <input className="chatbar-username" placeholder="Your Name (Optional)" 
      defaultValue = {this.props.currentUser.name}
-     onKeyPress= {this.props.changeName} />
+     onKeyPress= {this.props.changeName}  />
 
      <input className="chatbar-message" placeholder="Type a message and hit ENTER" 
      onKeyPress= {this.props.addMessage} />

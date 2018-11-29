@@ -23,8 +23,8 @@ class App extends Component {
   constructor(){
      super();
      this.state = {
-       currentUser: {name: "Bob"},
-       messages: []
+       "currentUser": {name: "Bob"},
+       "messages": []
 
       };
       this.addMessage = this.addMessage.bind(this);
@@ -43,9 +43,22 @@ class App extends Component {
       let data = JSON.parse(event.data);
 
       const newMessages =  {
-        username: data.username, 
-        content: data.content
+        "username": data.username, 
+        "content": data.content
       };
+
+      switch(data.type) {
+        case "incomingMessage":
+          newMessages.type = "incomingMessage"
+          break;
+
+        case "incomingNotification":
+          newMessages.type = "incomingNotification"
+          break;
+
+        default:
+          throw new Error("Unknown event type " + data.type);
+      }
 
       const messages = this.state.messages.concat(newMessages);
 
@@ -69,17 +82,29 @@ class App extends Component {
   changeName(e){
     var keycode = (e.keyCode ? e.keyCode : e.which);
      
-    if(keycode === 13){
-      let newCurrentUser = {name: e.target.value};
-      this.setState({currentUser: newCurrentUser});
+    let newCurrentUser = {name: e.target.value};
+    let oldCurrentUser = this.state.currentUser;
+
+    if(newCurrentUser && keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
+      
+
+      const newMessages =  {
+        "type": "postNotification",
+        "content": `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`
+      };
   
+      this.socket.send(JSON.stringify(newMessages));
+
+      this.setState({currentUser: newCurrentUser});
     }  
+
+
   }
 
   addMessage(e){
     var keycode = (e.keyCode ? e.keyCode : e.which);
   
-    if(keycode === 13){
+    if(e.target.value && keycode === 13){
    
         // const newMessages =  {
         //   // id: this.state.messages.length, 
@@ -88,8 +113,9 @@ class App extends Component {
         // };
         
         const newMessages =  {
-          username: this.state.currentUser.name, 
-          content: e.target.value
+          "type": "postMessage",
+          "username": this.state.currentUser.name, 
+          "content": e.target.value
         };
 
         // const messages = this.state.messages.concat(newMessages);
