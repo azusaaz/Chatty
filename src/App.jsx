@@ -22,14 +22,16 @@ class App extends Component {
 
   constructor(){
      super();
+     this.colorList = ["#6b5b95", "#feb236", "#d64161", "#ff7b25"];
      this.state = {
-       "currentUser": {name: "Bob"},
+       "currentUser": {name: "Anonymous"},
        "messages": [],
-       "numOfClient": 1
-
+       "numOfClient": 1,
+       "nameColor" : this.colorList[Math.floor(Math.random() * 3)],
       };
       this.addMessage = this.addMessage.bind(this);
       this.changeName = this.changeName.bind(this);
+      this.generateColor = this.generateColor.bind(this);
       this.socket = new WebSocket("ws://localhost:3001/");
   }
 
@@ -52,7 +54,9 @@ class App extends Component {
 
         const newMessages =  {
           "username": data.username, 
-          "content": data.content
+          "content": data.content,
+          "renderColor": data.userColor,
+          "ownerColor": data.ownerColor
         };
   
         switch(data.type) {
@@ -89,15 +93,29 @@ class App extends Component {
 
   }
 
+  generateColor(){
+    let colorList = [
+     "#6b5b95", "#feb236", "#d64161", "#ff7b25"
+    ]
+    
+    let nameColor = colorList[Math.floor(Math.random() * 3)];
+
+    this.setState({nameColor: nameColor});
+
+  }
+
   changeName(e){
-    var keycode = (e.keyCode ? e.keyCode : e.which);
+    let keycode = (e.keyCode ? e.keyCode : e.which);
      
     let newCurrentUser = {name: e.target.value};
     let oldCurrentUser = this.state.currentUser;
 
-    if(newCurrentUser && keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
-      
+    if(!newCurrentUser.name){
+      newCurrentUser.name = "Anonymous";
+    }
 
+    if(keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
+      
       const newMessages =  {
         "type": "postNotification",
         "content": `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`
@@ -107,7 +125,6 @@ class App extends Component {
 
       this.setState({currentUser: newCurrentUser});
     }  
-
 
   }
 
@@ -122,10 +139,12 @@ class App extends Component {
         //   content: e.target.value
         // };
         
+
         const newMessages =  {
           "type": "postMessage",
           "username": this.state.currentUser.name, 
-          "content": e.target.value
+          "content": e.target.value,
+          "ownerColor": this.state.nameColor
         };
 
         // const messages = this.state.messages.concat(newMessages);
@@ -147,7 +166,7 @@ class App extends Component {
          <a href="/" className="navbar-brand">Chatty</a>
          <p>{this.state.numOfClient} users online</p>
        </nav>
-      <MessageList messages= {this.state.messages} />
+      <MessageList messages= {this.state.messages} nameColor = {this.state.nameColor}/>
       <ChatBar addMessage={this.addMessage} changeName={this.changeName} currentUser = {this.state.currentUser}/>
       </div>
     );

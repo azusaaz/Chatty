@@ -9,7 +9,7 @@ class MessageList extends Component {
 
     let messages = this.props.messages.map((message, i)=>{
         // alert(message);
-        return <Message key = {i} message = {message}/>
+        return <Message key = {i} message = {message} />
     });
 
     return (
