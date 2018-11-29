@@ -28,6 +28,7 @@ class App extends Component {
 
       };
       this.addMessage = this.addMessage.bind(this);
+      this.changeName = this.changeName.bind(this);
       this.socket = new WebSocket("ws://localhost:3001/");
   }
 
@@ -65,8 +66,17 @@ class App extends Component {
 
   }
 
-  addMessage(e){
+  changeName(e){
+    var keycode = (e.keyCode ? e.keyCode : e.which);
+     
+    if(keycode === 13){
+      let newCurrentUser = {name: e.target.value};
+      this.setState({currentUser: newCurrentUser});
+  
+    }  
+  }
 
+  addMessage(e){
     var keycode = (e.keyCode ? e.keyCode : e.which);
   
     if(keycode === 13){
@@ -101,7 +111,7 @@ class App extends Component {
          <a href="/" className="navbar-brand">Chatty</a>
        </nav>
       <MessageList messages= {this.state.messages} />
-      <ChatBar onKeyPress={this.addMessage} currentUser = {this.state.currentUser}/>
+      <ChatBar addMessage={this.addMessage} changeName={this.changeName} currentUser = {this.state.currentUser}/>
       </div>
     );
   }
