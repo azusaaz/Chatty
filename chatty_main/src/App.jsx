@@ -33,6 +33,12 @@ class App extends Component {
       this.changeName = this.changeName.bind(this);
       this.generateColor = this.generateColor.bind(this);
       this.socket = new WebSocket("ws://localhost:3001/");
+      this.scrollToBottom = this.scrollToBottom.bind(this);
+  }
+
+  scrollToBottom() {
+     var target = document.getElementsByClassName("message");
+     target.item(target.length-1).scrollIntoView({ behavior: "smooth" });
   }
 
   componentDidMount() {
@@ -75,6 +81,8 @@ class App extends Component {
         const messages = this.state.messages.concat(newMessages);
   
         this.setState({messages: messages});
+
+        this.scrollToBottom();
 
       }
  

@@ -39,7 +39,7 @@ class Message extends Component {
           </div>;
 
     let notification = 
-          <div className="notification">
+          <div className="message notification">
             <span className="notification-content">{this.props.message.content}</span>
           </div>;
     
