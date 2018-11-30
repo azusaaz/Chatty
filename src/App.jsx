@@ -107,7 +107,7 @@ class App extends Component {
   changeName(e){
     let keycode = (e.keyCode ? e.keyCode : e.which);
      
-    let newCurrentUser = {name: e.target.value};
+    let newCurrentUser = {name: e.target.value.trim()};
     let oldCurrentUser = this.state.currentUser;
 
     if(!newCurrentUser.name){
@@ -130,8 +130,9 @@ class App extends Component {
 
   addMessage(e){
     var keycode = (e.keyCode ? e.keyCode : e.which);
+    var inputValue = e.target.value.trim();
   
-    if(e.target.value && keycode === 13){
+    if(inputValue && keycode === 13){
    
         // const newMessages =  {
         //   // id: this.state.messages.length, 
@@ -143,7 +144,7 @@ class App extends Component {
         const newMessages =  {
           "type": "postMessage",
           "username": this.state.currentUser.name, 
-          "content": e.target.value,
+          "content": inputValue,
           "ownerColor": this.state.nameColor
         };
 
