@@ -6,14 +6,14 @@ class App extends Component {
 
   constructor(){
      super();
-     this.colorList = ["#6b5b95", "#feb236", "#d64161", "#ff7b25"];
+     this.colorList = ['#6b5b95', '#feb236', '#d64161', '#ff7b25'];
      this.state = {
-       "currentUser": {name: "Anonymous"},
-       "messages": [],
-       "numOfClient": 1,
-       "nameColor" : this.colorList[Math.floor(Math.random() * 3)],
+       'currentUser': {name: 'Anonymous'},
+       'messages': [],
+       'numOfClient': 1,
+       'nameColor' : this.colorList[Math.floor(Math.random() * 3)],
       };
-      this.socket = new WebSocket("ws://localhost:3001/");
+      this.socket = new WebSocket('ws://localhost:3001/');
       this.addMessage = this.addMessage.bind(this);
       this.changeName = this.changeName.bind(this);
       this.generateColor = this.generateColor.bind(this);
@@ -21,13 +21,13 @@ class App extends Component {
   }
 
   scrollToBottom() {
-     var target = document.getElementsByClassName("message");
-     target.item(target.length-1).scrollIntoView({ behavior: "smooth" });
+     var target = document.getElementsByClassName('message');
+     target.item(target.length-1).scrollIntoView({ behavior: 'smooth' });
   }
 
   generateColor(){
     let colorList = [
-     "#6b5b95", "#feb236", "#d64161", "#ff7b25"
+     '#6b5b95', '#feb236', '#d64161', '#ff7b25'
     ]
     
     let nameColor = colorList[Math.floor(Math.random() * 3)];
@@ -41,14 +41,14 @@ class App extends Component {
     let oldCurrentUser = this.state.currentUser;
 
     if(!newCurrentUser.name){
-      newCurrentUser.name = "Anonymous";
+      newCurrentUser.name = 'Anonymous';
     }
 
     if(keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
       
       const newMessages =  {
-        "type": "postNotification",
-        "content": `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`
+        'type': 'postNotification',
+        'content': `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`
       };
   
       this.socket.send(JSON.stringify(newMessages));
@@ -63,10 +63,10 @@ class App extends Component {
   
     if(inputValue && keycode === 13){
         const newMessages =  {
-          "type": "postMessage",
-          "username": this.state.currentUser.name, 
-          "content": inputValue,
-          "ownerColor": this.state.nameColor
+          'type': 'postMessage',
+          'username': this.state.currentUser.name, 
+          'content': inputValue,
+          'ownerColor': this.state.nameColor
         };
 
         this.socket.send(JSON.stringify(newMessages));
@@ -76,7 +76,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('Client connected');
     
     this.socket.onmessage = (event) => {
       let data = JSON.parse(event.data);
@@ -87,23 +86,23 @@ class App extends Component {
       }else{
 
         const newMessages =  {
-          "username": data.username, 
-          "content": data.content,
-          "renderColor": data.userColor,
-          "ownerColor": data.ownerColor
+          'username': data.username, 
+          'content': data.content,
+          'renderColor': data.userColor,
+          'ownerColor': data.ownerColor
         };
   
         switch(data.type) {
-          case "incomingMessage":
-            newMessages.type = "incomingMessage"
+          case 'incomingMessage':
+            newMessages.type = 'incomingMessage'
             break;
   
-          case "incomingNotification":
-            newMessages.type = "incomingNotification"
+          case 'incomingNotification':
+            newMessages.type = 'incomingNotification'
             break;
   
           default:
-            throw new Error("Unknown event type " + data.type);
+            throw new Error('Unknown event type ' + data.type);
         }
   
         const messages = this.state.messages.concat(newMessages);
@@ -118,8 +117,8 @@ class App extends Component {
   render() {
     return (
       <div>
-       <nav className="navbar">
-         <a href="/" className="navbar-brand">Chatty</a>
+       <nav className='navbar'>
+         <a href='/' className='navbar-brand'>Chatty</a>
          <p>{this.state.numOfClient} users online</p>
        </nav>
       <MessageList messages= {this.state.messages} nameColor = {this.state.nameColor}/>
