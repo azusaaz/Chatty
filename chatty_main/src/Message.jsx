@@ -17,7 +17,7 @@ class Message extends Component {
        
         for(let ii =0; ii < urlList.length ; ii++){
           if(block === urlList[ii]){
-            newContent.push(<div><img key={index} src={block}/></div>);
+            newContent.push(<div key={index}><img key={index} src={block}/></div>);
             break;
           }
           else{
