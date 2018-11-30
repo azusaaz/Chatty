@@ -30,7 +30,7 @@ wss.on('connection', (ws) => {
   
     var data = JSON.parse(data);
     data.id = uuidv1();
-    console.log(data.type);
+
     switch(data.type) {
       case "postMessage":
         data.type = "incomingMessage";
