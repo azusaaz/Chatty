@@ -35,9 +35,11 @@ wss.on('connection', (ws) => {
       case "postMessage":
         data.type = "incomingMessage";
         break;
+
       case "postNotification":
         data.type = "incomingNotification";
         break;
+        
       default:
         throw new Error("Unknown event type " + data.type);
     }
@@ -46,7 +48,6 @@ wss.on('connection', (ws) => {
     wss.clients.forEach(function each(client) {
 
       if (client.readyState === WebSocket.OPEN) {
-        // console.log('received: %s', data);
 
         client.send(JSON.stringify(data));
       }
@@ -63,8 +64,5 @@ wss.on('connection', (ws) => {
         client.send(JSON.stringify(data));
       }
     });
-  
   });
-
 });
-

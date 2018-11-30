@@ -7,10 +7,10 @@ class Message extends Component {
 
     let newContent = [];
     let tmpContent = this.props.message.content.slice();
-
     let urlList= tmpContent.match(/(https|http):\/\/[^\s]*\.(jpg|png|gif)/g);
     
     if(urlList){
+      //separate url and non-url lines
       let contentBlocks = tmpContent.match(/((https|http):\/\/[^\s]*\.(jpg|png|gif))|([^\s]+)/g);
 
       contentBlocks.forEach((block, index)=>{
@@ -19,10 +19,12 @@ class Message extends Component {
           if(block === urlList[ii]){
             newContent.push(<div key={index}><img key={index} src={block}/></div>);
             break;
+
           }
           else{
             newContent.push(<span key={index}>{block}</span>);
             break;
+            
           }
         }
       });
@@ -51,10 +53,8 @@ class Message extends Component {
       <div>
         {message} 
       </div>
-
     );
   }
 }
-
 
 export default Message;
