@@ -16,23 +16,12 @@ class App extends Component {
       this.socket = new WebSocket('ws://localhost:3001/');
       this.addMessage = this.addMessage.bind(this);
       this.changeName = this.changeName.bind(this);
-      this.generateColor = this.generateColor.bind(this);
       this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   scrollToBottom() {
      var target = document.getElementsByClassName('message');
      target.item(target.length-1).scrollIntoView({ behavior: 'smooth' });
-  }
-
-  generateColor(){
-    let colorList = [
-     '#6b5b95', '#feb236', '#d64161', '#ff7b25', '#48CACE', '#48CE8D', '#C3D345', '#96439E'
-    ]
-    
-    let nameColor = colorList[Math.floor(Math.random() * 7)];
-
-    this.setState({nameColor: nameColor});
   }
 
   changeName(e){
