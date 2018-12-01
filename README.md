@@ -9,7 +9,7 @@ Chatty is a React app that allows users to communicate with each other without h
 ## Functions
 - Multiple User can do real time online chat through a page.
 - Users can set or change their user name.
-- Posted image urls are rendered as the images.
+- Posted image urls(http:// or https:// with a file extension .jpg, png, or gif) are rendered as the images.
 
 ## Dependencies
 
