@@ -2,10 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
-// html,body{
-//   max-width: 100%;
-// }
-
 body {
   background: white;
   color: black;
@@ -62,22 +58,17 @@ body {
 
 .message-content {
    max-width: 80%;
-  //  display: flex;
-  //  align-items: flex-start;
-  //  justify-content: flex-start;
-  //  justify-items: flex-start;
-  //  flex: 8;
+
   .content-wrapper{
     overflow: hidden;
     border-radius: 20px;
     padding: 10px 14px;
-    width: 80%;
+    max-width: 80%;
   }
 
   img{
     max-width: 100%;
-    // margin: 0;
-    // padding: 0;
+    margin: 0;
     vertical-align: bottom;
   }
 }
@@ -85,7 +76,6 @@ body {
 .message-username {
   min-width: 20%;
   max-width:300px;
-  // flex: 2;
   font-weight: 700;
   padding: 10px;
 }

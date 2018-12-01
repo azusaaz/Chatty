@@ -17,12 +17,12 @@ class Message extends Component {
        
         for(let ii =0; ii < urlList.length ; ii++){
           if(block === urlList[ii]){
-            newContent.push(<div key={index} style={{margin: '2px 0', borderRadius: '15px', overflow: 'hidden'}}><img key={index} src={block}/></div>);
+            newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>);
             break;
 
           }
           else{
-            newContent.push(<span key={index}>{block}&nbsp;</span>);
+            newContent.push(<span key={index} >{block}&nbsp;</span>);
             break;
             
           }
