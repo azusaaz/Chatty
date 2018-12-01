@@ -42,7 +42,7 @@ class App extends Component {
       
       const newMessages =  {
         'type': 'postNotification',
-        'content': `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`,
+        'content': `----- ${oldCurrentUser.name} has changed their name to ${newCurrentUser.name} -----`,
         'ownerColor': this.state.nameColor
       };
   
