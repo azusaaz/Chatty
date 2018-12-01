@@ -13,20 +13,22 @@ class Message extends Component {
       //separate url and non-url lines
       let contentBlocks = tmpContent.match(/((https|http):\/\/[^\s]*\.(jpg|png|gif))|([^\s]+)/g);
 
-      contentBlocks.forEach((block, index)=>{
-       
+      contentBlocks.forEach((block, index)=>{       
+        let found = false;
+
         for(let ii =0; ii < urlList.length ; ii++){
           if(block === urlList[ii]){
             newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>);
-            break;
 
-          }
-          else{
-            newContent.push(<span key={index} >{block}&nbsp;</span>);
-            break;
-            
+            found = true;
+            break;     
           }
         }
+
+        if(!found){
+          newContent.push(<span key={index} >{block}&nbsp;</span>);
+        }
+        
       });
 
     }else{
