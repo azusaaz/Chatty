@@ -22,7 +22,7 @@ class Message extends Component {
 
           }
           else{
-            newContent.push(<span key={index} style={{margin: '0'}}>{block}</span>);
+            newContent.push(<span key={index}>{block}&nbsp;</span>);
             break;
             
           }
