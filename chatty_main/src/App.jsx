@@ -6,12 +6,12 @@ class App extends Component {
 
   constructor(){
      super();
-     this.colorList = ['#6b5b95', '#feb236', '#d64161', '#ff7b25'];
+     this.colorList = ['#6b5b95', '#feb236', '#d64161', '#ff7b25', '#48CACE', '#48CE8D', '#C3D345', '#96439E'];
      this.state = {
        'currentUser': {name: 'Anonymous'},
        'messages': [],
        'numOfClient': 1,
-       'nameColor' : this.colorList[Math.floor(Math.random() * 3)],
+       'nameColor' : this.colorList[Math.floor(Math.random() * 7)],
       };
       this.socket = new WebSocket('ws://localhost:3001/');
       this.addMessage = this.addMessage.bind(this);
@@ -27,10 +27,10 @@ class App extends Component {
 
   generateColor(){
     let colorList = [
-     '#6b5b95', '#feb236', '#d64161', '#ff7b25'
+     '#6b5b95', '#feb236', '#d64161', '#ff7b25', '#48CACE', '#48CE8D', '#C3D345', '#96439E'
     ]
     
-    let nameColor = colorList[Math.floor(Math.random() * 3)];
+    let nameColor = colorList[Math.floor(Math.random() * 7)];
 
     this.setState({nameColor: nameColor});
   }

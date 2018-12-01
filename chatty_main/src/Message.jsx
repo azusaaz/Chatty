@@ -37,7 +37,7 @@ class Message extends Component {
     let message =   
           <div className='message'>
             <span className='message-username'  style={{color: this.props.message.ownerColor}}>{this.props.message.username}</span>
-            <span className='message-content'>{newContent}</span>
+            <span className='message-content' style={{backgroundColor: this.props.message.ownerColor, color: 'white'}}>{newContent}</span>
           </div>;
 
     let notification = 
