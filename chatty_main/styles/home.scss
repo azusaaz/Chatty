@@ -2,12 +2,17 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
+// html,body{
+//   max-width: 100%;
+// }
+
 body {
   background: white;
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   margin: 70px 0;
+  box-sizing: border-box;
 }
 
 .chatbar {
@@ -40,7 +45,6 @@ body {
 .message {
   display: flex;
   padding: 0 5px;
-  justify-content: flex-start;
 }
 
 .notification {
@@ -50,23 +54,40 @@ body {
 
 .message-content,
 .message-username {
-  overflow: hidden;
+
   margin: 5px;
-  padding: 10px 10px;
+  padding: 0 10px;
+  word-wrap: break-word;
 }
 
 .message-content {
-  flex: 8;
-  border-radius: 20px;
+   max-width: 80%;
+  //  display: flex;
+  //  align-items: flex-start;
+  //  justify-content: flex-start;
+  //  justify-items: flex-start;
+  //  flex: 8;
+  .content-wrapper{
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 10px 14px;
+    width: 80%;
+  }
 
   img{
-    max-width: 80%;
+    max-width: 100%;
+    // margin: 0;
+    // padding: 0;
+    vertical-align: bottom;
   }
 }
 
 .message-username {
-  flex: 2;
+  min-width: 20%;
+  max-width:300px;
+  // flex: 2;
   font-weight: 700;
+  padding: 10px;
 }
 
 .navbar {

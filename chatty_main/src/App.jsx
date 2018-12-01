@@ -33,11 +33,17 @@ class App extends Component {
       newCurrentUser.name = 'Anonymous';
     }
 
+    if(newCurrentUser.name.length > 15){
+      alert('please use less than fifteen letters for a username');
+      return;
+    }
+
     if(keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
       
       const newMessages =  {
         'type': 'postNotification',
-        'content': `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`
+        'content': `${oldCurrentUser.name} has changed their name to ${newCurrentUser.name}.`,
+        'ownerColor': this.state.nameColor
       };
   
       this.socket.send(JSON.stringify(newMessages));
@@ -110,7 +116,7 @@ class App extends Component {
          <a href='/' className='navbar-brand'>Chatty</a>
          <p>{this.state.numOfClient} users online</p>
        </nav>
-      <MessageList messages= {this.state.messages} nameColor = {this.state.nameColor}/>
+      <MessageList messages= {this.state.messages}/>
       <ChatBar addMessage={this.addMessage} changeName={this.changeName} currentUser = {this.state.currentUser}/>
       </div>
     );

@@ -17,7 +17,7 @@ class Message extends Component {
        
         for(let ii =0; ii < urlList.length ; ii++){
           if(block === urlList[ii]){
-            newContent.push(<div key={index}><img key={index} src={block}/></div>);
+            newContent.push(<div key={index} style={{margin: '2px 0', borderRadius: '15px', overflow: 'hidden'}}><img key={index} src={block}/></div>);
             break;
 
           }
@@ -37,12 +37,12 @@ class Message extends Component {
     let message =   
           <div className='message'>
             <span className='message-username'  style={{color: this.props.message.ownerColor}}>{this.props.message.username}</span>
-            <span className='message-content' style={{backgroundColor: this.props.message.ownerColor, color: 'white'}}>{newContent}</span>
+            <span className='message-content' ><div className="content-wrapper" style={{backgroundColor: this.props.message.ownerColor, color: 'white'}}>{newContent}</div></span>
           </div>;
 
     let notification = 
           <div className='message notification'>
-            <span className='notification-content'>{this.props.message.content}</span>
+            <span className='notification-content' style={{color: this.props.message.ownerColor}}>{this.props.message.content}</span>
           </div>;
     
     if (this.props.message.type === 'incomingNotification') {
