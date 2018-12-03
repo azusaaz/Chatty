@@ -12,7 +12,9 @@ Chatty is a React app that allows users to communicate with each other without h
 - Posted image urls(http:// or https:// with a file extension (.jpg, .png, or .gif) are rendered as the image. (In some cases, image url doesn't have any file extension. You can add either matching one (.jpg, .png, or .gif) manually to use the url.)
 
 <caption>&nbsp;Input example</caption>
-<img src="https://github.com/azusaaz/Chatty/blob/master/docs/ex.png" width ="450px"/>
+<img src="https://github.com/azusaaz/Chatty/blob/master/docs/ex_in.png" width ="450px"/>
+<caption>&nbsp;Output</caption>
+<img src="https://github.com/azusaaz/Chatty/blob/master/docs/ex_out.png" width ="450px"/>
 
 ## Dependencies
 
