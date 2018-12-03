@@ -7,34 +7,17 @@ class Message extends Component {
 
     let newContent = [];
     let tmpContent = this.props.message.content.slice();
-    let urlList= tmpContent.match(/(https|http):\/\/[^\s]*\.(jpg|png|gif)/g);
+    let contentBlocks= tmpContent.match(/([^\s]+)/g);
     
-    if(urlList){
-      //separate url and non-url lines
-      let contentBlocks = tmpContent.match(/((https|http):\/\/[^\s]*\.(jpg|png|gif))|([^\s]+)/g);
-
       contentBlocks.forEach((block, index)=>{       
-        let found = false;
 
-        for(let ii =0; ii < urlList.length ; ii++){
-          if(block === urlList[ii]){
-            newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>);
-
-            found = true;
-            break;     
+          if(block.match(/((https|http):\/\/[^\s]*\.(jpg|png|gif))/g)){
+            newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>);   
           }
-        }
-
-        if(!found){
-          newContent.push(<span key={index} >{block}&nbsp;</span>);
-        }
-        
+          else{
+            newContent.push(<span key={index} >{block}&nbsp;</span>);
+          } 
       });
-
-    }else{
-
-     newContent = tmpContent;
-    }
 
     let message =   
           <div className='message'>
