@@ -4,7 +4,7 @@ Chatty is a React app that allows users to communicate with each other without h
 
  *** Currently no persistent database is involved. ***
 
-!["Chatty"](https://github.com/azusaaz/Chatty/blob/master/docs/chatty2.gif)
+!["Chatty"](https://github.com/azusaaz/Chatty/blob/master/docs/chatty3.gif)
 
 ## Functions
 - Multiple User can do real time online chat through a page.
