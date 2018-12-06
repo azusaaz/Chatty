@@ -12,11 +12,14 @@ class Message extends Component {
       contentBlocks.forEach((block, index)=>{       
 
           if(block.match(/((https|http):\/\/[^\s]*\.(jpg|png|gif))/g)){
-            newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>);   
-          }
-          else{
+            newContent.push(<div key={index} style={{margin: '0 -5px', borderRadius: '15px', overflow: 'hidden', border: `5px solid ${this.props.message.ownerColor}`}}><img key={index} src={block}/></div>); 
+              
+          }else if(index === contentBlocks.length-1){
+            newContent.push(<span key={index} >{block}</span>);
+
+          }else{
             newContent.push(<span key={index} >{block}&nbsp;</span>);
-          } 
+          }
       });
 
     let message =   
