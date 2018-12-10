@@ -11,7 +11,7 @@ class App extends Component {
        'currentUser': {name: 'Anonymous'},
        'messages': [],
        'numOfClient': 1,
-       'nameColor' : this.colorList[Math.floor(Math.random() * 7)],
+       'nameColor' : this.colorList[Math.floor(Math.random() * 7)],  //set user color randomly
       };
       this.socket = new WebSocket('ws://localhost:3001/');
       this.addMessage = this.addMessage.bind(this);
@@ -19,27 +19,35 @@ class App extends Component {
       this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
+  // Autoscroll to the last message
   scrollToBottom() {
      var target = document.getElementsByClassName('message');
      target.item(target.length-1).scrollIntoView({ behavior: 'smooth' });
   }
 
+  // User can change own name after inputting name and hit enter
   changeName(e){
+    
+    //read a code key
     let keycode = (e.keyCode ? e.keyCode : e.which);
     let newCurrentUser = {name: e.target.value.trim()};
     let oldCurrentUser = this.state.currentUser;
 
+    // set Anonymous if the field was empty
     if(!newCurrentUser.name){
       newCurrentUser.name = 'Anonymous';
     }
 
+    // reject too long username 
     if(newCurrentUser.name.length > 15){
       alert('please use less than fifteen letters for a username');
       return;
     }
 
+    // if enter(keycode 13) was pressed and inputted name was different with current
     if(keycode === 13 && (oldCurrentUser.name !== newCurrentUser.name)){
       
+      // generate a new message object to send a server
       const newMessages =  {
         'type': 'postNotification',
         'content': `----- ${oldCurrentUser.name} has changed their name to ${newCurrentUser.name} -----`,
@@ -52,19 +60,24 @@ class App extends Component {
     }  
   }
 
+  // Accept a message input, and send server to broadcast it.
   addMessage(e){
+
+    // read a code key
     var keycode = (e.keyCode ? e.keyCode : e.which);
     var inputValue = e.target.value.trim();
   
+    // if any text was inputted, and enter(keycode 13) was pressed
     if(inputValue && keycode === 13){
-        const newMessages =  {
+        const newMessage =  {
           'type': 'postMessage',
           'username': this.state.currentUser.name, 
           'content': inputValue,
           'ownerColor': this.state.nameColor
         };
 
-        this.socket.send(JSON.stringify(newMessages));
+        // send data with string
+        this.socket.send(JSON.stringify(newMessage));
 
         e.target.value = '';
     }
@@ -73,6 +86,8 @@ class App extends Component {
   componentDidMount() {
     
     this.socket.onmessage = (event) => {
+
+      // convert data string to object
       let data = JSON.parse(event.data);
 
       if(data.numOfClient){
@@ -80,7 +95,8 @@ class App extends Component {
 
       }else{
 
-        const newMessages =  {
+        // generate a new message object to send a server
+        const newMessage =  {
           'username': data.username, 
           'content': data.content,
           'renderColor': data.userColor,
@@ -89,18 +105,18 @@ class App extends Component {
   
         switch(data.type) {
           case 'incomingMessage':
-            newMessages.type = 'incomingMessage'
+            newMessage.type = 'incomingMessage'
             break;
   
           case 'incomingNotification':
-            newMessages.type = 'incomingNotification'
+            newMessage.type = 'incomingNotification'
             break;
   
           default:
             throw new Error('Unknown event type ' + data.type);
         }
   
-        const messages = this.state.messages.concat(newMessages);
+        const messages = this.state.messages.concat(newMessage);
   
         this.setState({messages: messages});
 

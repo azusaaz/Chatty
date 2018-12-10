@@ -19,18 +19,26 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+  // Broadcast how many users are connecting to each client
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
+
+      //check how many users are connecting
       var data = {numOfClient: wss.clients.size}
       client.send(JSON.stringify(data));
     }
   });
 
+  // when a message was posted
   ws.on('message', function incoming(data) {
   
+    // make object from string
     var data = JSON.parse(data);
+
+    // generate random id for a message
     data.id = uuidv1();
 
+     // set message type
     switch(data.type) {
       case "postMessage":
         data.type = "incomingMessage";
@@ -58,6 +66,7 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected')
 
+    // Broadcast how many users are connecting to update the number.
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         var data = {numOfClient: wss.clients.size}

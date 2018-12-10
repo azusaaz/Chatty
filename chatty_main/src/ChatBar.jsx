@@ -6,13 +6,13 @@ class ChatBar extends Component{
     return (
      <footer className='chatbar'>
 
-     <input className='chatbar-username' placeholder='Your Name (Optional)' 
-     onKeyPress= {this.props.changeName} />
+        <input className='chatbar-username' placeholder='Your Name (Optional)' 
+        onKeyPress= {this.props.changeName} />
 
-     <input className='chatbar-message' placeholder='Type a message and hit ENTER' 
-     onKeyPress= {this.props.addMessage} />
+        <input className='chatbar-message' placeholder='Type a message and hit ENTER' 
+        onKeyPress= {this.props.addMessage} />
 
-   </footer>
+     </footer>
     );
   }
 }
