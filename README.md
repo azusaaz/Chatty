@@ -1,6 +1,6 @@
 # Chatty Project
 
-Chatty is a React app that allows users to communicate with each other without having to register accounts. 
+Chatty is a React app that allows users to communicate with each other without having accounts. 
 
  *** Currently no persistent database is involved. ***
 
