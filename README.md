@@ -17,6 +17,10 @@ Chatty is a React app that allows users to communicate with each other without h
 <caption>&nbsp;Output</caption>
 <img src="https://github.com/azusaaz/Chatty/blob/master/docs/ex_out.png" width ="450px"/>
 
+- If you want to use gif images on GIPHY(<a href="https://giphy.com/">https://giphy.com/<a>), select an image, choose "Media", and copy a url from "Small". Then, paste it in the chat box.
+
+<img src="https://github.com/azusaaz/Chatty/blob/master/docs/giphy_ex.png" width ="450px"/>
+
 ## Dependencies
 
 ### - Chatty-Server
